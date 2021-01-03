@@ -5,19 +5,25 @@ const mapStyles = {
   width: "100%",
   height: "100%",
 };
+
+
+
 export class MapContainer extends Component {
   render() {
-    const triangleCoords = [
-      { lat: 25.774, lng: -80.19 },
-      { lat: 18.466, lng: -66.118 },
-      { lat: 32.321, lng: -64.757 }      
-    ];
+
+    let json1 = require('./chicago to st louis.json');
+    let json2 = require('./St Louise to Joplin.json');
+    console.log(`FUCKING JSON1:  ${JSON.stringify(json1)}`);
+    console.log(`FUCKING JSON2:  ${JSON.stringify(json2)}`);
+    
+    const triangleCoords = json1.concat(json2);
+
     return (
       <Map
         google={this.props.google}
-        zoom={14}
+        zoom={7}
         style={mapStyles}
-        initialCenter={{ lat: 25.774, lng: -80.19 }}
+        initialCenter={ json1[0] }
       >
         <Polyline
           path={triangleCoords}
@@ -33,3 +39,4 @@ export class MapContainer extends Component {
 export default GoogleApiWrapper({
   apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
 })(MapContainer);
+
